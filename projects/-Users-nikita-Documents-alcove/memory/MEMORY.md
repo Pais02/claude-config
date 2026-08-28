@@ -1,0 +1,4 @@
+- [Project overview](project_overview.md) — Alcove (working title): SwiftUI + Supabase couples app, spec in SPEC.md, Sprint 1 wireframes done
+- [Design workflow](design_workflow.md) — design screens in Claude Design canvas (wireframe, strict HIG) before writing SwiftUI, confirmed by user
+- [Claude config repo](claude-config-repo.md) — ~/.claude is a private git repo synced between the Windows machine and the Mac
+- [Mac machine setup](mac-machine-setup.md) — Xcode yes, Node no, GitHub auth no, simulator taps blocked until `sudo xcode-select`
