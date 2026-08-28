@@ -1,0 +1,2 @@
+- [Trading Journal project status](project_trading_journal.md) — scope, decisions, and build status as of 2026-08-21
+- [User's multi-project stack](user_stack_multiproject.md) — Expo Router+Supabase+Stripe reused across Odysseus/OwlFlow/Trading Journal

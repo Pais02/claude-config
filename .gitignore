@@ -1,0 +1,37 @@
+# Whitelist, not a blacklist.
+#
+# Everything here is ignored unless it is named below. That way a new file
+# Claude Code drops into this directory -- a cache, a session transcript, a
+# credential -- stays out of the repository by default rather than by my
+# remembering to add it.
+#
+# Deliberately NOT tracked, and why:
+#   .credentials.json   an OAuth token, bound to this machine. Run `claude
+#                       login` on the other one instead.
+#   ../.claude.json     machineID, userID, project history with local paths.
+#   plugins/            re-installed from the marketplace on demand.
+#   cache/ sessions/ shell-snapshots/ file-history/ backups/ ide/ session-env/
+#                       state belonging to one machine.
+#   projects/*/*.jsonl  full session transcripts. Private, large, useless
+#                       elsewhere.
+
+/*
+
+!/.gitignore
+!/CLAUDE.md
+!/settings.json
+!/rules/
+!/skills/
+!/agents/
+
+# Memory, and only memory -- descend into projects/<name>/memory/ while
+# leaving the transcripts sitting beside it ignored.
+!/projects/
+/projects/*
+!/projects/*/
+/projects/*/*
+!/projects/*/memory/
+
+# Documentation for this repo itself.
+!/README.md
+!/.gitattributes

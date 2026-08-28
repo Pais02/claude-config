@@ -1,0 +1,2 @@
+- [Project overview](project_overview.md) — Alcove (working title): SwiftUI + Supabase couples app, spec in SPEC.md, Sprint 1 wireframes done
+- [Design workflow](design_workflow.md) — design screens in Claude Design canvas (wireframe, strict HIG) before writing SwiftUI, confirmed by user
