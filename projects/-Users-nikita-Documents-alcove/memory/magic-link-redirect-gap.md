@@ -1,35 +1,36 @@
 ---
 name: magic-link-redirect-gap
-description: "Alcove's magic-link return: what the redirect allow-list actually governs, and what is still unproven"
+description: "Alcove magic links: the redirect works, the code exchange is unproven, and retries are capped at two emails an hour"
 metadata:
   type: project
 ---
 
-Investigated 2026-09-03 against the live project (ref `drkwsdfkzawsyipfhujv`).
+Tested 2026-09-03 against the live project (`drkwsdfkzawsyipfhujv`), with a
+real email to the user's own inbox.
 
-**What was true:** the project's redirect allow-list (`uri_allow_list`) was
-empty and Site URL was `http://localhost:3000`. `alcove://auth-callback` has
-since been added, through the Management API.
+**Settled.** The project's `uri_allow_list` was empty; `alcove://auth-callback`
+was added through the Management API. A link the app itself requested then
+redirected to `alcove://auth-callback` rather than to the Site URL, so magic
+links can reach the app on a device. The app handles a bad callback properly —
+it showed "Email link is invalid or has expired" instead of failing silently.
 
-**What was wrong in the earlier diagnosis:** the end-to-end script warned on
-every run that links pointed at localhost, and that was blamed on the empty
-allow-list. The real cause was the script itself — `admin/generate_link` takes
-`redirect_to` at the **top level** of the body and silently ignores it inside
-`options`. Sent correctly, minted links point at `alcove://auth-callback`, and
-they still do with the allow-list emptied again: the admin path never consults
-it.
+**A correction worth keeping:** an earlier warning blamed the empty allow-list
+for links pointing at localhost. That was a script bug —
+`admin/generate_link` takes `redirect_to` at the top level and ignores it
+inside `options`. The admin path never consults the allow-list at all; the
+client path does.
 
-**Still unproven:** whether the client path (`/otp`, what the app actually
-calls) enforces the allow-list. It cannot be tested with throwaway addresses —
-`/otp` rejects `.invalid` domains with `email_address_invalid` before looking
-at the redirect at all. Settling it needs a magic link sent to a real inbox and
-opened on a device, which also remains the only untested part of pairing.
+**Still unproven:** exchanging a live code for a session. The token in the test
+email was already spent when the link was followed, and had not timed out
+(`mailer_otp_exp` is 3600s). Something consumed it in transit or on opening.
 
-**Also worth knowing:** the client signs in over PKCE, so the link exchange can
-never be automated — the verifier exists only inside the client that requested
-the link, and an admin-minted link fails with "Not a valid PKCE flow URL". The
-end-to-end test installs a session directly and covers everything after it.
+**Retries are rationed:** no custom SMTP (`smtp_host` null), so the built-in
+sender is fixed at **two emails per hour**. `rate_limit_email_sent` cannot be
+raised — the Management API refuses without SMTP credentials configured. Plan
+around two attempts, and be careful with UI-test retry helpers: one blind
+re-tap burned an attempt before this was understood.
 
-**How to apply:** do not describe email pairing as verified end to end; the
-allow-list entry is correct but was not shown to be what was blocking anything.
-See [[project-overview]] and [[mac-machine-setup]].
+**How to apply:** to finish this, either wait out the hour and try again, or
+set up a custom SMTP provider first — which also fixes deliverability before
+anyone else signs in. Scripts: `ios/scripts/send-real-link.sh` then
+`open-real-link.sh`. See [[project-overview]] and [[mac-machine-setup]].
