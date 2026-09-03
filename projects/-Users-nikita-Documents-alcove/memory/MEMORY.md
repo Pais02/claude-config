@@ -1,5 +1,5 @@
 - [Project overview](project_overview.md) — Alcove (working title): SwiftUI + Supabase couples app, spec in SPEC.md, Sprint 1 wireframes done
 - [Design workflow](design_workflow.md) — design screens in Claude Design canvas (wireframe, strict HIG) before writing SwiftUI, confirmed by user
 - [Claude config repo](claude-config-repo.md) — ~/.claude is a private git repo synced between the Windows machine and the Mac
-- [Mac machine setup](mac-machine-setup.md) — simulator works fine (no xcode-select needed); GitHub push works over SSH; no brew, no Node, taps impossible
+- [Mac machine setup](mac-machine-setup.md) — simulator fine, GitHub over SSH, Node via nvm (needs sourcing); no brew, taps impossible
 - [Magic link pairing verified](magic-link-pairing-verified.md) — email pairing works end to end; Brevo SMTP configured; click tracking adds a hop that can burn one-shot links
