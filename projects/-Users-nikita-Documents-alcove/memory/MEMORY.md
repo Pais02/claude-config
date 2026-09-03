@@ -2,4 +2,4 @@
 - [Design workflow](design_workflow.md) — design screens in Claude Design canvas (wireframe, strict HIG) before writing SwiftUI, confirmed by user
 - [Claude config repo](claude-config-repo.md) — ~/.claude is a private git repo synced between the Windows machine and the Mac
 - [Mac machine setup](mac-machine-setup.md) — simulator works fine (no xcode-select needed); GitHub push works over SSH; no brew, no Node, taps impossible
-- [Magic link redirect gap](magic-link-redirect-gap.md) — links do return to the app; code exchange still unproven; only 2 emails/hour without custom SMTP
+- [Magic link pairing verified](magic-link-pairing-verified.md) — email pairing works end to end; Brevo SMTP configured; click tracking adds a hop that can burn one-shot links
